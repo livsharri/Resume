@@ -1,0 +1,106 @@
+---
+title: "Introduction to E-Business Analytics"
+author: "Alivia Sharrington-664875663"
+date: "2025-09-09"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Executive Summary
+
+This analysis examines website activity, focusing on user engagement, performance, and server load. Higher engagement is generally associated with stronger performance, indicating that strategies to boost user activity can improve outcomes. While some performance data are missing, the trends provide actionable insights for optimizing the website and enhancing both user experience and system efficiency.
+
+## Question 1 
+```{R}
+webperfo <- data.frame(
+  engagement = airquality$Temp,
+  performance = airquality$Ozone,
+  server_load = airquality$Wind
+)
+```
+### Q.1A
+```{R}
+head( webperfo )
+```
+We see 3 columns: engagement, performance, and server_load. Viewing only the first few rows provides a concise overview of the dataset, allowing for a quick review while avoiding overwhelming the output display.
+
+### Q.1B
+```{R}
+summary( webperfo )
+```
+Performance has 37 missing values (NA). Engagement ranges from 56 to 97, showing the minimum and maximum daily user scores.
+
+### Q.1C
+```{R}
+nrow( webperfo )
+```
+There are 153 days of data, providing a sufficient history for analysis and planning website improvements.
+
+### Q.1D
+```{R}
+max( webperfo )
+```
+The highest daily engagement is 97,above the median of 79, highlighting peak user activity days.
+
+### Q.1E
+```{R}
+max( webperfo$performance, na.rm = TRUE )
+```
+The highest performance score is 168. na.rm = TRUE is required because performance contains missing values (NA).
+
+## Question 2
+
+### Q.2A
+```{R}
+plot( webperfo$engagement, webperfo$performance )
+```
+
+The plot shows a general upward trend—higher engagement tends to be associated with higher performance.
+
+### Q.2B
+```{R}
+plot(x = webperfo$engagement, y = webperfo$performance,
+     main = "User Engagement vs Website Performance",
+     xlab = "Daily User Engagement Score", 
+     ylab = "Website Performance Score")
+```
+
+The title and labels clarify the meaning of the axes and the relationship being examined. A business audience can quickly understand that the plot links engagement to performance.
+
+### Q.2C
+```{R}
+plot(x = webperfo$engagement, y = webperfo$performance,
+     main = "User Engagement vs Website Performance",
+     xlab = "Daily User Engagement Score", 
+     ylab = "Website Performance Score",
+pch = 16, col = "#EBB8C0")
+```
+
+Points are now easier to see and interpret. The upward pattern is clearer—days with higher engagement generally show better performance. Moreover, when user engagement increases, website performance tends to improve, indicating that strategies that boost engagement may also enhance performance metrics.
+
+### Q.2D
+```{R}
+plot(x = webperfo$engagement, y = webperfo$performance,
+     main = "User Engagement vs Website Performance",
+     xlab = "Daily User Engagement Score", 
+     ylab = "Website Performance Score",
+pch = 16, col = "#EBB8C0") 
+abline(lm(performance ~ engagement, data = webperfo), 
+       col = "#F6A4B0", lwd = 2)
+```
+
+The red trend line slopes upwards, confirming a positive relationship. As engagement increases, website performance tends to increase in a fairly linear fashion.
+
+## Question 3
+
+### Q.3A
+```{R}
+cor(webperfo$engagement, webperfo$performance, use = "complete.obs")
+```
+ This would be a moderately positive relationship (between 0.3 and 0.7).
+
+### Q.3B
+Higher engagement generally corresponds to higher website performance. For a business manager, this means investing in features, content, or promotions that increase user engagement can directly improve website performance. This relationship should guide strategies for optimization, such as enhancing interactive elements or personalized experiences to maintain high engagement levels.
